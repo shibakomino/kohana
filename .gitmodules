@@ -1,3 +1,30 @@
 [submodule "modules/core-dev"]
 	path = modules/core-dev
 	url = https://github.com/shibakomino/kohana-core-dev.git
+[submodule "modules/auth"]
+	path = modules/auth
+	url = https://github.com/shibakomino/auth.git
+[submodule "modules/cache"]
+	path = modules/cache
+	url = https://github.com/shibakomino/cache.git
+[submodule "modules/codebench"]
+	path = modules/codebench
+	url = https://github.com/shibakomino/codebench.git
+[submodule "modules/database"]
+	path = modules/database
+	url = https://github.com/shibakomino/database.git
+[submodule "modules/image"]
+	path = modules/image
+	url = https://github.com/shibakomino/image.git
+[submodule "modules/minion"]
+	path = modules/minion
+	url = https://github.com/shibakomino/minion.git
+[submodule "modules/orm"]
+	path = modules/orm
+	url = https://github.com/shibakomino/orm.git
+[submodule "modules/unittest"]
+	path = modules/unittest
+	url = https://github.com/shibakomino/unittest.git
+[submodule "modules/userguide"]
+	path = modules/userguide
+	url = https://github.com/shibakomino/userguide.git
