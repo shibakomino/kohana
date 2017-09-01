@@ -12,4 +12,9 @@ composer.lock
 composer.phar
 vendor/*
 .idea
+.htaccess
+application/config/database.php
+application/config/url.php
 application/database/db.sqlite
+media/upload
+media/imagecache
