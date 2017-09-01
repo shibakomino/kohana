@@ -28,3 +28,7 @@
 [submodule "modules/userguide"]
 	path = modules/userguide
 	url = https://github.com/shibakomino/userguide.git
+[submodule "system"]
+	path = system
+	url = https://github.com/shibakomino/core.git
+	branch = 3.7/develop
