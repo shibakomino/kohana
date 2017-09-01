@@ -11,3 +11,5 @@ build
 composer.lock
 composer.phar
 vendor/*
+.idea
+application/database/db.sqlite

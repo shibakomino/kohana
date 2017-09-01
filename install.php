@@ -163,6 +163,23 @@ else
 				<td class="fail">Neither <code>$_SERVER['REQUEST_URI']</code>, <code>$_SERVER['PHP_SELF']</code>, or <code>$_SERVER['PATH_INFO']</code> is available.</td>
 			<?php endif ?>
 		</tr>
+
+    <tr>
+      <th>SQLite Directory</th>
+      <?php if (is_dir(APPPATH) AND is_dir(APPPATH.'database') AND is_writable(APPPATH.'database')): ?>
+        <td class="pass"><?php echo APPPATH.'database/' ?></td>
+      <?php else: $failed = TRUE ?>
+        <td class="fail">The <code><?php echo APPPATH.'database/' ?></code> directory is not writable.</td>
+      <?php endif ?>
+    </tr>
+    <tr>
+      <th>SQLite File</th>
+      <?php if (is_dir(APPPATH) AND is_writable(APPPATH.'database/db.sqlite')): ?>
+        <td class="pass"><?php echo APPPATH.'database/db.sqlite' ?></td>
+      <?php else: $failed = TRUE ?>
+        <td class="fail">The <code><?php echo APPPATH.'database/db.sqlite' ?></code> file is not writable.</td>
+      <?php endif ?>
+    </tr>
 	</table>
 
 	<?php if ($failed === TRUE): ?>
