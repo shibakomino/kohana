@@ -1,6 +1,3 @@
-[submodule "modules/core-dev"]
-	path = modules/core-dev
-	url = https://github.com/shibakomino/kohana-core-dev.git
 [submodule "modules/auth"]
 	path = modules/auth
 	url = https://github.com/shibakomino/auth.git
