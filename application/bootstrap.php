@@ -119,16 +119,19 @@ Kohana::$config->attach(new Config_File);
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
+// Make the system relative to the docroot, for symlink'd index.php
+define('DEV_MODPATH', realpath(DOCROOT.'../dev-modules/').DIRECTORY_SEPARATOR);
+
 Kohana::modules(array(
 	// 'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
+	// 'codebench'  => DEV_MODPATH.'codebench',  // Benchmarking tool
 	// 'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
 	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+	// 'unittest'   => DEV_MODPATH.'unittest',   // Unit testing
+	// 'userguide'  => DEV_MODPATH.'userguide',  // User guide and API documentation
 	));
 
 /**
