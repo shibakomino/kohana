@@ -29,3 +29,9 @@
 	path = system
 	url = https://github.com/shibakomino/core.git
 	branch = 3.7/develop
+[submodule "modules/core/config"]
+	path = modules/core/config
+	url = https://github.com/shibakomino/kohana-core-config.git
+[submodule "modules/core/wrapper"]
+	path = modules/core/wrapper
+	url = https://github.com/shibakomino/kohana-core-wrapper.git
