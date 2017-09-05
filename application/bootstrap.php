@@ -1,19 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
-
+<?php
 // -- Environment setup --------------------------------------------------------
 
-// Load the core Kohana class
-//require SYSPATH.'classes/Kohana/Core'.EXT;
-
-if (is_file(APPPATH.'classes/Kohana'.EXT))
-{
-	// Application extends the core
-	require APPPATH.'classes/Kohana'.EXT;
-}
-else
-{
-	// Load system kohana core
-	require SYSPATH.'classes/Kohana'.EXT;
+// Load the Kohana class, Application folder is higher priority than system folder.
+if (is_file(APPPATH . 'classes/Kohana' . EXT)) {
+    require APPPATH . 'classes/Kohana' . EXT; // Application folder
+} else {
+    require SYSPATH . 'classes/Kohana' . EXT;    // Load system kohana core
 }
 
 /**
@@ -41,14 +33,6 @@ setlocale(LC_ALL, 'en_US.utf-8');
 spl_autoload_register(array('Kohana', 'auto_load_PSR4'));
 
 /**
- * Optionally, you can enable a compatibility auto-loader for use with
- * older modules that have not been updated for PSR-0.
- *
- * It is recommended to not enable this unless absolutely necessary.
- */
-//spl_autoload_register(array('Kohana', 'auto_load_lowercase'));
-
-/**
  * Enable the Kohana auto-loader for unserialization.
  *
  * @link http://www.php.net/manual/function.spl-autoload-call
@@ -71,10 +55,9 @@ mb_substitute_character('none');
  */
 //I18n::lang('en-us');
 
-if (isset($_SERVER['SERVER_PROTOCOL']))
-{
-	// Replace the default protocol.
-//	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+if (isset($_SERVER['SERVER_PROTOCOL'])) {
+    // Replace the default protocol.
+    HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
 }
 
 /**
@@ -83,37 +66,65 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
+$environment = isset($_SERVER['KOHANA_ENV']) ?
+    constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV'])) :
+    Kohana::PRODUCTION;
 
-$environment = isset($_SERVER['KOHANA_ENV'])?
-  constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV'])) :
-  Kohana::PRODUCTION;
+switch ($environment) {
+    case Kohana::DEVELOPMENT:
+        $core_modules = [
+            'core-exception' => DEV_MODPATH . 'core/exception',
+            'core-debug' => DEV_MODPATH . 'core/debug',
+//      'core-profiling'  => DEV_MODPATH.'core-profiling',
+            'core-wrapper' => MODPATH . 'core/wrapper',
+            'core-lowercase' => MODPATH. 'core-lowercase',
+            'sample' => DEV_MODPATH . 'sample',
+        ];
 
+        break;
+    case Kohana::TESTING:
+    case Kohana::STAGING:
+    case Kohana::PRODUCTION:
+        $core_modules = [
+            'core-cache' => MODPATH . 'core/cache',
+            'core-wrapper' => MODPATH . 'core/wrapper',
+        ];
+
+    default:
+        $core_modules = [];
+        break;
+}
 
 // include the module paths.
-define('DEV_MODPATH', realpath(DOCROOT.'../dev-modules/').DIRECTORY_SEPARATOR);
-Kohana::modules(array(
-  'core-debug'      => DEV_MODPATH.'core/debug',
-  'core-exception'  => DEV_MODPATH.'core/exception',
-  'core-wrapper'    => MODPATH.'core/wrapper',
+URL::set_base_url(isset($_SERVER['KOHANA_BASE_URL']) ? $_SERVER['KOHANA_BASE_URL'] : '/');
+URL::set_index_file('');
+
+Kohana::init($environment);           //set the enviorment variable
+Kohana::modules($core_modules, true); //just create the module list and extend the path for file searching;
+Kohana::modules_init();               //Enable modules. Modules are referenced by a relative or absolute path.
+
+//[
+//  'core-exception'  => DEV_MODPATH.'core/exception',
+//  'core-debug'      => DEV_MODPATH.'core/debug',
+
 //  'core-config'      => MODPATH.'core/config',
 
 //  'kohana-core-dev' => DEV_MODPATH.'kohana-core-dev',
 
+//  'error'  => MODPATH.'core_mvc',
 //  'core-wrapper'  => MODPATH.'core-wrapper', //kohana use wrapper to resolve conflict className, maybe upgrade to namespace.
-  // 'auth'       => MODPATH.'auth',       // Basic authentication
-  // 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-  // 'codebench'  => DEV_MODPATH.'codebench',  // Benchmarking tool
-  // 'database'   => MODPATH.'database',   // Database access
-  // 'image'      => MODPATH.'image',      // Image manipulation
-  // 'minion'     => MODPATH.'minion',     // CLI Tasks
-  // 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-  // 'unittest'   => DEV_MODPATH.'unittest',   // Unit testing
-  // 'userguide'  => DEV_MODPATH.'userguide',  // User guide and API documentation
+// 'auth'       => MODPATH.'auth',       // Basic authentication
+// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
+// 'codebench'  => DEV_MODPATH.'codebench',  // Benchmarking tool
+// 'database'   => MODPATH.'database',   // Database access
+// 'image'      => MODPATH.'image',      // Image manipulation
+// 'minion'     => MODPATH.'minion',     // CLI Tasks
+// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+// 'unittest'   => DEV_MODPATH.'unittest',   // Unit testing
+// 'userguide'  => DEV_MODPATH.'userguide',  // User guide and API documentation
 //  'core-i18n'  => MODPATH.'core-i18n',
 //  'core-log'   => MODPATH.'core-log',
 
-  'sample'     => DEV_MODPATH.'sample',
-));
 
 /**
  * Initialize Kohana, setting the default options.
@@ -134,31 +145,6 @@ Kohana::modules(array(
 //the local virtual host should start with local., eg: http://local.xxxxxx.xxx
 //$settings['base_url'] = ;
 
-$settings = array(
-  'base_url' => isset($_SERVER['KOHANA_BASE_URL']) ? $_SERVER['KOHANA_BASE_URL'] : '/',
-  'errors' => FALSE,
-  'profile' => FALSE,
-  'caching' => TRUE,
-  'index_file'=>'',
-);
-
-//DEPRECIATED: the base url for digi3 preview should handing in .htaccess
-if(preg_match('/digi3studio.com\/preview/', APPPATH) == 1){
-  $settings['base_url'] = preg_replace('/(\/mnt\/www\/digi3studio.com)|(application\/)/', "",APPPATH);
-}
-
-switch ($environment) {
-  case Kohana::DEVELOPMENT:
-    $settings['caching'] = FALSE;
-    break;
-  case Kohana::TESTING:
-  case Kohana::STAGING:
-  case Kohana::PRODUCTION:
-  default:
-    break;
-}
-
-Kohana::init($settings);
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
@@ -179,33 +165,26 @@ Kohana::init($settings);
  */
 //Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 
-/**
- * Enable modules. Modules are referenced by a relative or absolute path.
- */
-
-
-Kohana::modules_init();
-
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-//Helper_Route is d3core
-//\Kohana\Helper\Route::make_routes();
 
+//support add addition routes with weighting.
+Route::make_routes();
 
-Kohana_Route::set('default', '(<controller>)(/<action>(/<id>))(.<format>)')
-  ->defaults(array(
-    'controller' => 'welcome',
-    'action'     => 'index',
-    'format'	 => 'php',
-  ));
+Route::set('default', '(<controller>)(/<action>(/<id>))(.<format>)')
+    ->defaults(array(
+        'controller' => 'welcome',
+        'action' => 'index',
+        'format' => 'php',
+    ));
 
 /**
  * Cookie Salt
  * @see  http://kohanaframework.org/3.3/guide/kohana/cookies
- * 
+ *
  * If you have not defined a cookie salt in your Cookie class then
  * uncomment the line below and define a preferrably long salt.
  */

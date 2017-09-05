@@ -3,7 +3,7 @@
 // Sanity check, install should only be checked from index.php
 defined('SYSPATH') or exit('Install tests must be loaded from within index.php!');
 
-if (version_compare(PHP_VERSION, '5.3', '<'))
+if (version_compare(PHP_VERSION, '5.4', '<'))
 {
 	// Clear out the cache to prevent errors. This typically happens on Windows/FastCGI.
 	clearstatcache();
@@ -197,14 +197,6 @@ else
 
 	<table cellspacing="0">
 		<tr>
-			<th>PECL HTTP Enabled</th>
-			<?php if (extension_loaded('http')): ?>
-				<td class="pass">Pass</td>
-			<?php else: ?>
-				<td class="fail">Kohana can use the <a href="http://php.net/http">http</a> extension for the Request_Client_External class.</td>
-			<?php endif ?>
-		</tr>
-		<tr>
 			<th>cURL Enabled</th>
 			<?php if (extension_loaded('curl')): ?>
 				<td class="pass">Pass</td>
@@ -246,5 +238,8 @@ else
 		</tr>
 	</table>
 
+<?php
+phpinfo();
+?>
 </body>
 </html>
