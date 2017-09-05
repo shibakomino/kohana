@@ -74,10 +74,12 @@ switch ($environment) {
     case Kohana::DEVELOPMENT:
         $core_modules = [
             'core-exception' => DEV_MODPATH . 'core/exception',
-            'core-debug' => DEV_MODPATH . 'core/debug',
 //      'core-profiling'  => DEV_MODPATH.'core-profiling',
             'core-wrapper' => MODPATH . 'core/wrapper',
             'core-lowercase' => MODPATH. 'core-lowercase',
+            'core-log' => MODPATH . 'core/log',
+            'core-debug' => DEV_MODPATH . 'core/debug',
+
             'sample' => DEV_MODPATH . 'sample',
         ];
 
@@ -88,6 +90,8 @@ switch ($environment) {
         $core_modules = [
             'core-cache' => MODPATH . 'core/cache',
             'core-wrapper' => MODPATH . 'core/wrapper',
+            'core-lowercase' => MODPATH. 'core-lowercase',
+            'core-log' => MODPATH . 'core/log',
         ];
 
     default:
