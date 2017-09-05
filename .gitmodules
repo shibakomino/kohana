@@ -35,3 +35,6 @@
 [submodule "modules/core/wrapper"]
 	path = modules/core/wrapper
 	url = https://github.com/shibakomino/kohana-core-wrapper.git
+[submodule "modules/core/log"]
+	path = modules/core/log
+	url = https://github.com/shibakomino/kohana-core-log.git
