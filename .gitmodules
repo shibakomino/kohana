@@ -38,3 +38,37 @@
 [submodule "modules/core/log"]
 	path = modules/core/log
 	url = https://github.com/shibakomino/kohana-core-log.git
+[submodule "modules/core/expose"]
+	path = modules/core/expose
+	url = https://github.com/shibakomino/kohana-core-expose.git
+	branch = 3.7/master
+[submodule "modules/core/cookie"]
+	path = modules/core/cookie
+	url = https://github.com/shibakomino/kohana-core-cookie.git
+	branch = 3.7/master
+[submodule "modules/core/cache"]
+	path = modules/core/cache
+	url = https://github.com/shibakomino/kohana-core-cache.git
+[submodule "modules/core/utils"]
+	path = modules/core/utils
+	url = https://github.com/shibakomino/kohana-core-utils.git
+[submodule "modules/core/encrypt"]
+	path = modules/core/encrypt
+	url = https://github.com/shibakomino/kohana-core-encrypt.git
+	branch = 3.7/master
+[submodule "modules/core/mvc"]
+	path = modules/core/mvc
+	url = https://github.com/shibakomino/kohana-core-mvc.git
+[submodule "modules/core/i18n"]
+	path = modules/core/i18n
+	url = https://github.com/shibakomino/kohana-i18n.git
+	branch = 3.7/master
+[submodule "modules/core/html"]
+	path = modules/core/html
+	url = https://github.com/shibakomino/kohana-core-html.git
+[submodule "modules/core/validate"]
+	path = modules/core/validate
+	url = https://github.com/shibakomino/kohana-core-validate.git
+[submodule "modules/core/curl"]
+	path = modules/core/curl
+	url = https://github.com/shibakomino/kohana-core-curl.git
